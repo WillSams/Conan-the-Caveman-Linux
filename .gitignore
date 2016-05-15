@@ -1,0 +1,32 @@
+# Compiled Object files
+*.o
+*.obj
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]uild/
+[Bb]in/
+
+# Compiled Dynamic libraries
+*.so
+*.dll
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Executables
+*.out
+
+# Temp files
+*~
+
+#output files
+valgrind.output
+CON
+*.swp
+
+#Netbeans project files 
+nbproject/
