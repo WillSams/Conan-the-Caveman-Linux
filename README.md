@@ -1,6 +1,6 @@
 # Conan-the-Caveman-Linux
 
-Example project from ['SDL Game Development'][2] by Shaun Mitchell. The book explains everything from a Windows user perspective.
+Example project from ['SDL Game Development'][2] by Shaun Mitchell. The book explains everything from a Windows user perspective so this repo exists as an alternative for those who want to learn on Linux, Windows Subsystem for Linux, or MacOS.
 
 ![text](conan-screen.png)
 
