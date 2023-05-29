@@ -1,7 +1,6 @@
-NAME			= conan-game
-BIN				= $(NAME)
-BIN_DIR   		= $(PWD)/bin
-TARGET 			= $(BIN_DIR)/$(BIN)
+BIN		= conan-game
+BIN_DIR		= $(PWD)/bin
+TARGET		= $(BIN_DIR)/$(BIN)
 DATA_PREFIX   	= $(PWD)/data/
 
 CC = g++
