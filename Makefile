@@ -6,7 +6,7 @@ DATA_PREFIX   	= $(PWD)/data/
 
 CC = g++
 LIB = -L/usr/local/lib -Wl,-rpath=/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lz -ltinyxml
-INCLUDE = -isystem -I/usr/local/include
+INCLUDE = -I/usr/local/include
 CCFLAGS = -Wall -c -g -std=c++17  -DDATA_PREFIX=\"$(DATA_PREFIX)\" \
 	-Wno-reorder -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function $(INCLUDE) 
 

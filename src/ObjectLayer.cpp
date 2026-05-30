@@ -52,7 +52,6 @@ void ObjectLayer::update(Level* pLevel)
             // check if dead or off screen
             if((*it)->dead() || (*it)->getPosition().m_y > TheGame::Instance()->getGameHeight())
             {
-                std::cout << "deleting";
                 delete * it;
                 it = m_gameObjects.erase(it); // erase from vector and get new iterator
             }

@@ -160,7 +160,7 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Lay
                             {
                                 property->Attribute("value", &callbackID);
                             }
-                            else if(e->Attribute("name") == std::string("animSpeed"))
+                            else if(property->Attribute("name") == std::string("animSpeed"))
                             {
                                 property->Attribute("value", &animSpeed);
                             }

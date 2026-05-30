@@ -54,7 +54,7 @@ bool GameOverState::onEnter()
 {
     // parse the state
     StateParser stateParser;
-    stateParser.parseState("assets/conan.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
+    stateParser.parseState(DATA_PREFIX "conan.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
     
     m_callbacks.push_back(0);
     m_callbacks.push_back(s_gameOverToMain);
@@ -81,8 +81,6 @@ bool GameOverState::onExit()
         
         m_gameObjects.clear();
     }
-    
-    std::cout << m_gameObjects.size();
     
     // clear the texture manager
     for(int i = 0; i < m_textureIDList.size(); i++)

@@ -151,8 +151,8 @@ void Game::clean()
     
     m_pGameStateMachine->clean();
     
-    m_pGameStateMachine = 0;
     delete m_pGameStateMachine;
+    m_pGameStateMachine = 0;
     
     TheTextureManager::Instance()->clearTextureMap();
     
