@@ -93,7 +93,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     }
     
     // add some sound effects - TODO move to better place
-    TheSoundManager::Instance()->load("DST-Away.ogg", "music1", SOUND_MUSIC);
+    TheSoundManager::Instance()->load("DST-Away.wav", "music1", SOUND_MUSIC);
     TheSoundManager::Instance()->load("jump.wav", "jump", SOUND_SFX);
     //TheSoundManager::Instance()->load("phaser.wav", "shoot", SOUND_SFX);
     
@@ -151,8 +151,8 @@ void Game::clean()
     
     m_pGameStateMachine->clean();
     
-    m_pGameStateMachine = 0;
     delete m_pGameStateMachine;
+    m_pGameStateMachine = 0;
     
     TheTextureManager::Instance()->clearTextureMap();
     

@@ -34,8 +34,6 @@ void Player::collision()
         m_numFrames = 9;
         m_width = 50;
         m_bDying = true;
-        
-        std::cout << m_currentFrame;
     }
 }
 
@@ -339,13 +337,10 @@ void Player::handleInput()
     if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE) && m_bCanJump && !m_bPressedJump)
     {
         TheSoundManager::Instance()->playSound("jump", 0);
-        if(!m_bPressedJump)
-        {
-            m_bJumping = true;
-            m_bCanJump = false;
-            m_lastSafePos = m_position;
-            m_bPressedJump = true;
-        }
+        m_bJumping = true;
+        m_bCanJump = false;
+        m_lastSafePos = m_position;
+        m_bPressedJump = true;
     }
     
     if(!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE) && m_bCanJump)

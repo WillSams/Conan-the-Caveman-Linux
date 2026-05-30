@@ -50,8 +50,11 @@ void GameStateMachine::popState()
         m_gameStates.back()->onExit();
         m_gameStates.pop_back();
     }
-    
-    m_gameStates.back()->resume();
+
+    if(!m_gameStates.empty())
+    {
+        m_gameStates.back()->resume();
+    }
 }
 
 void GameStateMachine::changeState(GameState *pState)
