@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-07-08]
+
+### Changed
+
+- **Rebuilt the game on Storm Engine v2** (linked as `libstormenginev2`), replacing the book-derived singleton architecture (`TheGame`, `TheTextureManager`, `TheInputHandler`, TMX `LevelParser` with base64/zlib) with the engine's `Game` + `GameStateMachine` + `AssetStore`
+- Level converted offline from Tiled TMX to the engine's editor `.map` format via `tools/tmx2map.py` (873 tiles) plus a merged-run collider map (50 rects) — no XML/zlib/base64 parsing at runtime
+- Menu / Pause / GameOver screens are driven by the engine's `XmlLoader` reading the existing `conan.xml` (3-frame buttons, blinking game-over text)
+- Pause now rides the state stack (`pushState`/`popState`/`resume()`) instead of a bespoke flag
+- Platformer physics (gravity, jump, axis-separated AABB, edge/wall probes for snail patrols, stomp detection) extracted into pure SDL-free headers with an igloo spec suite (25 specs, `make test`)
+- Dropped dependencies: `tinyxml` (v1) and `zlib`; added `libstormenginev2` and `tinyxml2`
+
+### Notes
+
+- Requires Storm Engine v2 **v1.0.2+** — the game changes state from within states and pushes a pause overlay, which relies on the engine's deferred discarded-state deletion
+- `tools/tmx2map.py` regenerates `data/conan.map` / `data/conan_colliders.map` from `data/gfx/map1.tmx` if the level changes
+
 ## [2026-05-30]
 
 ### Added
