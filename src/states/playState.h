@@ -11,6 +11,7 @@
 #include <stormengine2/states/gameState.h>
 #include <stormengine2/tilemapLoader.h>
 
+#include "../input/gamepad.h"
 #include "../level/colliderMap.h"
 #include "../physics/platformer.h"
 #include "../sprites/playerFrames.h"
@@ -78,7 +79,8 @@ private:
 
     float cameraX_ = 0.f;
 
-    // Input
+    // Input (keyboard + gamepad merged each frame)
+    Gamepad gamepad_;
     bool keyLeft_ = false, keyRight_ = false, keyJump_ = false, wantPause_ = false;
 
     // Audio (freed in onExit)

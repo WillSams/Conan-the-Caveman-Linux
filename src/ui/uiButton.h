@@ -43,9 +43,11 @@ inline bool UpdateButton(UiButton &b, float mx, float my, bool mouseDown) {
     return clicked;
 }
 
-// Draws the frame that matches the current mouse state.
+// Draws the frame that matches the current mouse state. `selected` (keyboard
+// or gamepad navigation) shows the hover frame without the mouse.
 inline void DrawButton(SDL_Renderer *renderer, AssetStore *assetStore,
-                       const UiButton &b, float mx, float my, bool mouseDown) {
+                       const UiButton &b, float mx, float my, bool mouseDown,
+                       bool selected = false) {
     SDL_Texture *tex = assetStore->GetTexture(b.textureId);
     if (!tex) return;
 
@@ -53,7 +55,7 @@ inline void DrawButton(SDL_Renderer *renderer, AssetStore *assetStore,
     SDL_QueryTexture(tex, nullptr, nullptr, &texW, &texH);
     int frameW = texW / 3;
 
-    bool over  = PointInBox(mx, my, b.x, b.y, b.w, b.h);
+    bool over  = PointInBox(mx, my, b.x, b.y, b.w, b.h) || selected;
     int  frame = ButtonFrame(over, over && mouseDown);
 
     SDL_Rect src = {frame * frameW, 0, frameW, texH};

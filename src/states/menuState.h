@@ -9,6 +9,7 @@
 #include <stormengine2/logger.h>
 #include <stormengine2/states/gameState.h>
 
+#include "../input/gamepad.h"
 #include "../ui/uiButton.h"
 
 // Main menu: play / exit buttons defined by the MENU section of conan.xml.
@@ -35,10 +36,19 @@ private:
     bool             &isRunning_;
     GameStateMachine &machine_;
 
+    void Activate(int callbackId);
+
     std::vector<UiButton> buttons_;
 
     float mouseX_ = 0.f, mouseY_ = 0.f;
     bool  mouseDown_ = false;
+
+    // Keyboard/gamepad navigation
+    Gamepad gamepad_;
+    int     selected_   = 0;
+    bool    navUp_      = false;
+    bool    navDown_    = false;
+    bool    navConfirm_ = false;
 
     int millisecondsPreviousFrame_ = 0;
 };

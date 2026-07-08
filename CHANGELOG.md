@@ -8,7 +8,11 @@
 - Level converted offline from Tiled TMX to the engine's editor `.map` format via `tools/tmx2map.py` (873 tiles) plus a merged-run collider map (50 rects) — no XML/zlib/base64 parsing at runtime
 - Menu / Pause / GameOver screens are driven by the engine's `XmlLoader` reading the existing `conan.xml` (3-frame buttons, blinking game-over text)
 - Pause now rides the state stack (`pushState`/`popState`/`resume()`) instead of a bespoke flag
-- Platformer physics (gravity, jump, axis-separated AABB, edge/wall probes for snail patrols, stomp detection) extracted into pure SDL-free headers with an igloo spec suite (25 specs, `make test`)
+- Platformer physics (gravity, jump, axis-separated AABB, edge/wall probes for snail patrols, stomp detection) extracted into pure SDL-free headers with an igloo spec suite (`make test`)
+
+### Added
+
+- Gamepad support (Xbox/PlayStation-style, USB or Bluetooth, hot-pluggable): d-pad/left stick moves, A jumps, Start pauses; menus navigate with d-pad + A (and Up/Down + Enter on the keyboard). Deadzone and menu-wrap logic are pure and spec'd (32 specs total)
 - Dropped dependencies: `tinyxml` (v1) and `zlib`; added `libstormenginev2` and `tinyxml2`
 
 ### Notes

@@ -46,18 +46,39 @@ void GameOverState::processInput() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) { isRunning_ = false; return; }
-        if (event.type == SDL_KEYDOWN &&
-            event.key.keysym.sym == SDLK_ESCAPE) {
-            isRunning_ = false;
-            return;
+        if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+            switch (event.key.keysym.sym) {
+            case SDLK_ESCAPE: isRunning_ = false; return;
+            case SDLK_UP:     case SDLK_w: navUp_      = true; break;
+            case SDLK_DOWN:   case SDLK_s: navDown_    = true; break;
+            case SDLK_RETURN: case SDLK_SPACE: navConfirm_ = true; break;
+            default: break;
+            }
         }
     }
+
+    GamepadState gp = gamepad_.poll();
+    navUp_      = navUp_      || gp.upPressed;
+    navDown_    = navDown_    || gp.downPressed;
+    navConfirm_ = navConfirm_ || gp.confirmPressed;
 
     int mx, my;
     Uint32 buttons = SDL_GetMouseState(&mx, &my);
     mouseX_    = static_cast<float>(mx);
     mouseY_    = static_cast<float>(my);
     mouseDown_ = (buttons & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
+}
+
+void GameOverState::Activate(int callbackId) {
+    if (callbackId == 1) {              // Main menu
+        machine_.changeState(new MenuState(
+            renderer_, windowWidth_, windowHeight_, isDebugging_,
+            assetStore_, isRunning_, machine_));
+    } else if (callbackId == 2) {       // Restart
+        machine_.changeState(new PlayState(
+            renderer_, windowWidth_, windowHeight_, isDebugging_,
+            assetStore_, isRunning_, machine_));
+    }
 }
 
 void GameOverState::update() {
@@ -74,21 +95,20 @@ void GameOverState::update() {
         titleFrame_ = (titleFrame_ + 1) % 2;
     }
 
+    if (navUp_)   selected_ = WrapSelection(selected_, -1, buttons_.size());
+    if (navDown_) selected_ = WrapSelection(selected_,  1, buttons_.size());
+    bool confirm = navConfirm_;
+    navUp_ = navDown_ = navConfirm_ = false;
+
+    if (confirm && !buttons_.empty()) {
+        Activate(buttons_[selected_].callbackId);
+        return;
+    }
+
     for (auto &b : buttons_) {
         if (!UpdateButton(b, mouseX_, mouseY_, mouseDown_)) continue;
-
-        if (b.callbackId == 1) {        // Main menu
-            machine_.changeState(new MenuState(
-                renderer_, windowWidth_, windowHeight_, isDebugging_,
-                assetStore_, isRunning_, machine_));
-            return;
-        }
-        if (b.callbackId == 2) {        // Restart
-            machine_.changeState(new PlayState(
-                renderer_, windowWidth_, windowHeight_, isDebugging_,
-                assetStore_, isRunning_, machine_));
-            return;
-        }
+        Activate(b.callbackId);
+        return;
     }
 }
 
@@ -105,8 +125,9 @@ void GameOverState::render() {
         SDL_RenderCopy(renderer_, title, &src, &titleDst_);
     }
 
-    for (const auto &b : buttons_)
-        DrawButton(renderer_, assetStore_, b, mouseX_, mouseY_, mouseDown_);
+    for (std::size_t i = 0; i < buttons_.size(); ++i)
+        DrawButton(renderer_, assetStore_, buttons_[i], mouseX_, mouseY_,
+                   mouseDown_, static_cast<int>(i) == selected_);
 
     SDL_RenderPresent(renderer_);
 }

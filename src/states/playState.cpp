@@ -105,6 +105,13 @@ void PlayState::processInput() {
     keyRight_ = keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_D];
     keyJump_  = keys[SDL_SCANCODE_SPACE] || keys[SDL_SCANCODE_UP] ||
                 keys[SDL_SCANCODE_W];
+
+    // Merge in the gamepad: d-pad/stick moves, A jumps, Start pauses.
+    GamepadState gp = gamepad_.poll();
+    keyLeft_   = keyLeft_  || gp.moveDir < 0;
+    keyRight_  = keyRight_ || gp.moveDir > 0;
+    keyJump_   = keyJump_  || gp.jumpHeld;
+    wantPause_ = wantPause_ || gp.pausePressed;
 }
 
 void PlayState::update() {
